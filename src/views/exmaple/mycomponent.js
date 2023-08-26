@@ -6,9 +6,9 @@ class ClassComponent extends React.Component {
     name: "Hiep",
     age: "21",
     arrJobs: [
-      { id: "1", title: "Developers", salary: "500 $" },
-      { id: "2", title: "Testers", salary: "400 $" },
-      { id: "3", title: "PM", salary: "1000 $" },
+      { id: "1", title: "Developers", salary: "500" },
+      { id: "2", title: "Testers", salary: "400" },
+      { id: "3", title: "PM", salary: "1000" },
     ],
   };
 
@@ -26,6 +26,7 @@ class ClassComponent extends React.Component {
             type="text"
             onChange={(event) => this.handleOnChange(event)}
           ></input>
+          <br></br>
           My name is: {this.state.name}
         </div>
         <ChildComponent
