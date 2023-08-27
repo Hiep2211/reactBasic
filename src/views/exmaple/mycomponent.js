@@ -1,43 +1,68 @@
 import React from "react";
 import ChildComponent from "./ChildComponent";
+import AddComponent from "./AddComponent";
 
-class ClassComponent extends React.Component {
+class MyComponent extends React.Component {
+  //key:value
   state = {
-    name: "Hiep",
-    age: "21",
     arrJobs: [
-      { id: "1", title: "Developers", salary: "500" },
-      { id: "2", title: "Testers", salary: "400" },
-      { id: "3", title: "PM", salary: "1000" },
+      { id: "abcJob1", title: "Developers", salary: "500" },
+      { id: "abcJob2", title: "Testers", salary: "400" },
+      { id: "abcJob3", title: "Project managers", salary: "1000" },
     ],
   };
 
-  handleOnChange = (event) => {
+  addNewJob = (job) => {
+    console.log("check job from parent: ", job);
+    // let currenJobs = this.state.arrJobs;
+    // currenJobs.push(job)
+
     this.setState({
-      name: event.target.value,
+      arrJobs: [...this.state.arrJobs, job],
+      // arrJobs: currenJobs
     });
   };
+
+  deleteAJob = (job) => {
+    let currenJobs = this.state.arrJobs;
+    currenJobs = currenJobs.filter((item) => item.id !== job.id);
+    this.setState({
+      arrJobs: currenJobs,
+    });
+  };
+
+  componentDidUpdate(prevProps, prevState) {
+    console.log(
+      ">> run didupdate: ",
+      "prev state: ",
+      prevState,
+      " current state: ",
+      this.state
+    );
+  }
+  componentDidMount() {
+    console.log(">>> run component did mount");
+  }
+
+  /* 
+    JSX => return block
+    fragment
+    */
+
+  //re-render
   render() {
+    console.log(">>> call render: ", this.state);
     return (
       <>
-        <div className="first">
-          <input
-            value={this.state.name}
-            type="text"
-            onChange={(event) => this.handleOnChange(event)}
-          ></input>
-          <br></br>
-          My name is: {this.state.name}
-        </div>
+        <AddComponent addNewJob={this.addNewJob} />
+
         <ChildComponent
-          name={this.state.name}
-          age={"21"}
-          adress={"ha noi"}
           arrJobs={this.state.arrJobs}
+          deleteAJob={this.deleteAJob}
         />
       </>
     );
   }
 }
 
-export default ClassComponent;
+export default MyComponent;

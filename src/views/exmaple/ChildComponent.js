@@ -1,36 +1,52 @@
 import React from "react";
+import "./Demo.scss";
 
 class ChildComponent extends React.Component {
+  //re-render
   state = {
-    showJob: false,
+    showJobs: false,
   };
-  handleShowHide() {
+
+  handleShowHide = () => {
     this.setState({
-      showJob: !this.state.showJob,
+      showJobs: !this.state.showJobs,
     });
-  }
+  };
+
+  handleOnclickDelete = (job) => {
+    console.log(">>> handleOnclickDelete: ", job);
+    this.props.deleteAJob(job);
+  };
+
   render() {
     let { arrJobs } = this.props;
-    let { showJob } = this.state;
+    let { showJobs } = this.state;
+    let check = showJobs === true ? "showJobs = true" : "showJobs = false";
+    console.log(">>> check conditional: ", check);
     return (
       <>
-        {showJob === false ? (
-          <>
-            <div>
-              <button onClick={() => this.handleShowHide()}>Show</button>
-            </div>
-          </>
+        {showJobs === false ? (
+          <div>
+            <button
+              style={{ color: "red" }}
+              onClick={() => this.handleShowHide()}
+            >
+              Show
+            </button>
+          </div>
         ) : (
           <>
-            <div className="job-titles">
+            <div className="job-lists">
               {arrJobs.map((item, index) => {
-                if (item.salary >= 500) {
-                  return (
-                    <div key={item.id}>
-                      {item.title} - {item.salary}$
-                    </div>
-                  );
-                }
+                return (
+                  <div key={item.id}>
+                    {item.title} - {item.salary}
+                    <></>{" "}
+                    <span onClick={() => this.handleOnclickDelete(item)}>
+                      x
+                    </span>
+                  </div>
+                );
               })}
             </div>
             <div>
